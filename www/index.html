@@ -18,7 +18,8 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
 #feed { height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
 #feed::-webkit-scrollbar { display: none; }
 .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.65); }
+.video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.6); }
+.video-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 50%, rgba(0,0,0,0.8) 100%); }
 
 .user-info { position: absolute; bottom: 90px; right: 16px; left: 90px; z-index: 10; }
 .user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -78,7 +79,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
 <div id="feed">
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/VkgbpGW/f0452301d58e103e3564ab63c9731e02.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1589561006913-6b4c1c7e1e40?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ع</div>
@@ -96,7 +97,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/Rpn31Nz7/0ac00a14e49f16902a71c58111ebb2f8.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1590168462614-9c42c6b1d84c?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ب</div>
@@ -114,7 +115,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/fYM70LCG/411c2550ba65d5edf88484ce7b91c1b3.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1580744996142-1b8ad12d8e04?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">م</div>
@@ -132,7 +133,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/dHMgZ1c/a886cd3e039a1977da805e3f64255d00.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">أ</div>
@@ -150,7 +151,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/W4rDVGtK/4a2d6917fa56a93abfc5925d5ea24088.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ن</div>
@@ -168,7 +169,7 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://i.ibb.co/Zz1k9dv6/9676fd48a1b9a9ab145297211d8ac4b5.jpg');"></div>
+    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1519066629447-267fffa62d4b?w=800');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ب</div>
