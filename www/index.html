@@ -5,73 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>عراقچي</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
 
-  /* شاشة البداية */
-  #splash { position: fixed; inset: 0; background: linear-gradient(180deg, #000 0%, #1a0000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.8s; }
-  #splash.hide { opacity: 0; pointer-events: none; }
-  .splash-logo { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, #CE1126 0%, #000 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(206,17,38,0.6); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-  .splash-logo h1 { font-size: 44px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .splash-tagline { margin-top: 30px; font-size: 16px; color: #888; letter-spacing: 2px; }
+#splash { position: fixed; inset: 0; background: linear-gradient(180deg, #000 0%, #1a0000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.8s; }
+#splash.hide { opacity: 0; pointer-events: none; }
+.splash-logo { width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, #CE1126 0%, #000 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(206,17,38,0.6); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.splash-logo h1 { font-size: 44px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.splash-tagline { margin-top: 30px; font-size: 16px; color: #888; letter-spacing: 2px; }
 
-  /* الفيديوات */
-  #feed { height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
-  #feed::-webkit-scrollbar { display: none; }
-  .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.55); }
-  .bg1 { background: linear-gradient(135deg, #1a0000, #000); }
-  .bg2 { background: linear-gradient(135deg, #000, #1a1a00); }
-  .bg3 { background: linear-gradient(135deg, #001a1a, #000); }
-  .video-content { position: relative; z-index: 2; text-align: center; padding: 40px 20px; }
-  .video-content .emoji { font-size: 110px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-  .video-content .text { font-size: 30px; font-weight: bold; text-shadow: 0 2px 20px rgba(0,0,0,0.8); }
+#feed { height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
+#feed::-webkit-scrollbar { display: none; }
+.video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.65); }
 
-  /* معلومات المستخدم */
-  .user-info { position: absolute; bottom: 90px; right: 16px; left: 90px; z-index: 10; }
-  .user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #CE1126, #fff); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; border: 2px solid #fff; flex-shrink: 0; }
-  .username { font-weight: bold; font-size: 16px; }
-  .follow-btn { background: transparent; border: 1.5px solid #CE1126; color: #CE1126; padding: 4px 14px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-  .follow-btn.following { background: #CE1126; color: #fff; }
-  .caption { font-size: 14px; line-height: 1.5; text-shadow: 0 1px 6px rgba(0,0,0,0.8); }
-  .hashtag { color: #CE1126; font-weight: bold; }
+.user-info { position: absolute; bottom: 90px; right: 16px; left: 90px; z-index: 10; }
+.user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #CE1126, #fff); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; border: 2px solid #fff; flex-shrink: 0; }
+.username { font-weight: bold; font-size: 16px; }
+.follow-btn { background: transparent; border: 1.5px solid #CE1126; color: #CE1126; padding: 4px 14px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+.follow-btn.following { background: #CE1126; color: #fff; }
+.caption { font-size: 14px; line-height: 1.5; text-shadow: 0 1px 6px rgba(0,0,0,0.9); }
+.hashtag { color: #CE1126; font-weight: bold; }
 
-  /* الأزرار الجانبية */
-  .side-actions { position: absolute; left: 10px; bottom: 100px; display: flex; flex-direction: column; gap: 22px; z-index: 10; align-items: center; }
-  .action { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.15s; }
-  .action:active { transform: scale(0.85); }
-  .action-icon { font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); }
-  .action-icon.liked { animation: likePop 0.4s; filter: drop-shadow(0 0 10px #CE1126); }
-  @keyframes likePop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
-  .action-label { font-size: 12px; margin-top: 3px; font-weight: bold; text-shadow: 0 1px 3px #000; }
+.side-actions { position: absolute; left: 10px; bottom: 100px; display: flex; flex-direction: column; gap: 22px; z-index: 10; align-items: center; }
+.action { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.15s; }
+.action:active { transform: scale(0.85); }
+.action-icon { font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); }
+.action-icon.liked { animation: likePop 0.4s; filter: drop-shadow(0 0 10px #CE1126); }
+@keyframes likePop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+.action-label { font-size: 12px; margin-top: 3px; font-weight: bold; text-shadow: 0 1px 3px #000; }
 
-  /* الشريط العلوي */
-  .top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent); }
-  .top-tabs { display: flex; gap: 20px; font-size: 16px; font-weight: bold; }
-  .top-tab { color: #888; cursor: pointer; padding-bottom: 4px; transition: 0.2s; }
-  .top-tab.active { color: #fff; border-bottom: 2px solid #CE1126; }
-  .app-name { font-size: 22px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent); }
+.top-tabs { display: flex; gap: 20px; font-size: 16px; font-weight: bold; }
+.top-tab { color: #888; cursor: pointer; padding-bottom: 4px; transition: 0.2s; }
+.top-tab.active { color: #fff; border-bottom: 2px solid #CE1126; }
+.app-name { font-size: 22px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-  /* الشريط السفلي */
-  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 18px; background: linear-gradient(0deg, rgba(0,0,0,0.95), transparent); }
-  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #888; font-size: 11px; transition: 0.2s; }
-  .nav-item.active { color: #fff; }
-  .nav-item .nav-icon { font-size: 22px; }
-  .plus-btn { width: 48px; height: 32px; background: linear-gradient(90deg, #CE1126, #fff); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(206,17,38,0.5); }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 18px; background: linear-gradient(0deg, rgba(0,0,0,0.95), transparent); }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #888; font-size: 11px; transition: 0.2s; }
+.nav-item.active { color: #fff; }
+.nav-item .nav-icon { font-size: 22px; }
+.plus-btn { width: 48px; height: 32px; background: linear-gradient(90deg, #CE1126, #fff); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(206,17,38,0.5); }
 
-  /* الكومنتات */
-  .comments-panel { position: fixed; bottom: 0; left: 0; right: 0; height: 60vh; background: #1a1a1a; border-radius: 20px 20px 0 0; z-index: 100; transform: translateY(100%); transition: transform 0.3s; padding: 20px; overflow-y: auto; }
-  .comments-panel.open { transform: translateY(0); }
-  .comments-title { text-align: center; font-weight: bold; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333; }
-  .comment { display: flex; gap: 10px; margin-bottom: 18px; }
-  .comment .avatar { width: 36px; height: 36px; font-size: 14px; }
-  .comment-text .name { font-size: 13px; color: #888; margin-bottom: 3px; }
-  .comment-text .text { font-size: 14px; }
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
-  .overlay.open { display: block; }
+.comments-panel { position: fixed; bottom: 0; left: 0; right: 0; height: 60vh; background: #1a1a1a; border-radius: 20px 20px 0 0; z-index: 100; transform: translateY(100%); transition: transform 0.3s; padding: 20px; overflow-y: auto; }
+.comments-panel.open { transform: translateY(0); }
+.comments-title { text-align: center; font-weight: bold; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333; }
+.comment { display: flex; gap: 10px; margin-bottom: 18px; }
+.comment .avatar { width: 36px; height: 36px; font-size: 14px; }
+.comment-text .name { font-size: 13px; color: #888; margin-bottom: 3px; }
+.comment-text .text { font-size: 14px; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+.overlay.open { display: block; }
 </style>
 </head>
 <body>
@@ -90,9 +76,9 @@
 </div>
 
 <div id="feed">
+
   <div class="video-card">
-    <div class="video-bg bg1"></div>
-    <div class="video-content"><div class="emoji">🕌</div><div class="text">بغداد يا بغداد</div></div>
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/VkgbpGW/f0452301d58e103e3564ab63c9731e02.jpg');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ع</div>
@@ -110,8 +96,7 @@
   </div>
 
   <div class="video-card">
-    <div class="video-bg bg2"></div>
-    <div class="video-content"><div class="emoji">🌊</div><div class="text">شط العرب</div></div>
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/Rpn31Nz7/0ac00a14e49f16902a71c58111ebb2f8.jpg');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ب</div>
@@ -129,8 +114,7 @@
   </div>
 
   <div class="video-card">
-    <div class="video-bg bg3"></div>
-    <div class="video-content"><div class="emoji">🏛️</div><div class="text">الموصل تنتعش</div></div>
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/fYM70LCG/411c2550ba65d5edf88484ce7b91c1b3.jpg');"></div>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">م</div>
@@ -146,6 +130,61 @@
       <div class="action"><div class="action-icon">💿</div></div>
     </div>
   </div>
+
+  <div class="video-card">
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/dHMgZ1c/a886cd3e039a1977da805e3f64255d00.jpg');"></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">أ</div>
+        <div class="username">@أربيل_قلب_كردستان</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">قلعة أربيل 🏰 <span class="hashtag">#أربيل</span> <span class="hashtag">#كردستان</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">22K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">560</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">180</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/W4rDVGtK/4a2d6917fa56a93abfc5925d5ea24088.jpg');"></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">ن</div>
+        <div class="username">@نواعير_الفرات</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">نواعير الأنبار 🌊 <span class="hashtag">#الأنبار</span> <span class="hashtag">#الفرات</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">18K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">390</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">95</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <div class="video-bg" style="background-image: url('https://i.ibb.co/Zz1k9dv6/9676fd48a1b9a9ab145297211d8ac4b5.jpg');"></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">ب</div>
+        <div class="username">@بغداد_المدينة_الحلوة</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">بغداد 🕌 <span class="hashtag">#بغداد</span> <span class="hashtag">#العراق</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">30K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">720</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">210</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+
 </div>
 
 <div class="bottom-nav">
@@ -175,19 +214,4 @@
 </script>
 
 </body>
-</html>رقم العائلة : 0205745
-الاسم الاول : حيدر مخيف حسين
-المواليد : 1976
-العمر : 50
-الوظيفة : None
-المحافظة : بابل
-القضاء : None
-المحلة : 624
-الزقاق : 00066
-رقم الدار : 01:q!
-:q
-Save modified buffer?
-n
-
-
-
+</html>
