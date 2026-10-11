@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>عراقچي</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
+
+  /* شاشة البداية */
+  #splash { position: fixed; inset: 0; background: linear-gradient(180deg, #000 0%, #1a0000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.8s; }
+  #splash.hide { opacity: 0; pointer-events: none; }
+  .splash-logo { width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, #CE1126 0%, #000 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(206,17,38,0.6); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .splash-logo h1 { font-size: 44px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .splash-tagline { margin-top: 30px; font-size: 16px; color: #888; letter-spacing: 2px; }
+
+  /* الفيديوات */
+  #feed { height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
+  #feed::-webkit-scrollbar { display: none; }
+  .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.55); }
+  .bg1 { background: linear-gradient(135deg, #1a0000, #000); }
+  .bg2 { background: linear-gradient(135deg, #000, #1a1a00); }
+  .bg3 { background: linear-gradient(135deg, #001a1a, #000); }
+  .video-content { position: relative; z-index: 2; text-align: center; padding: 40px 20px; }
+  .video-content .emoji { font-size: 110px; margin-bottom: 20px; animation: float 3s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+  .video-content .text { font-size: 30px; font-weight: bold; text-shadow: 0 2px 20px rgba(0,0,0,0.8); }
+
+  /* معلومات المستخدم */
+  .user-info { position: absolute; bottom: 90px; right: 16px; left: 90px; z-index: 10; }
+  .user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #CE1126, #fff); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; border: 2px solid #fff; flex-shrink: 0; }
+  .username { font-weight: bold; font-size: 16px; }
+  .follow-btn { background: transparent; border: 1.5px solid #CE1126; color: #CE1126; padding: 4px 14px; border-radius: 4px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+  .follow-btn.following { background: #CE1126; color: #fff; }
+  .caption { font-size: 14px; line-height: 1.5; text-shadow: 0 1px 6px rgba(0,0,0,0.8); }
+  .hashtag { color: #CE1126; font-weight: bold; }
+
+  /* الأزرار الجانبية */
+  .side-actions { position: absolute; left: 10px; bottom: 100px; display: flex; flex-direction: column; gap: 22px; z-index: 10; align-items: center; }
+  .action { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.15s; }
+  .action:active { transform: scale(0.85); }
+  .action-icon { font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)); }
+  .action-icon.liked { animation: likePop 0.4s; filter: drop-shadow(0 0 10px #CE1126); }
+  @keyframes likePop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+  .action-label { font-size: 12px; margin-top: 3px; font-weight: bold; text-shadow: 0 1px 3px #000; }
+
+  /* الشريط العلوي */
+  .top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent); }
+  .top-tabs { display: flex; gap: 20px; font-size: 16px; font-weight: bold; }
+  .top-tab { color: #888; cursor: pointer; padding-bottom: 4px; transition: 0.2s; }
+  .top-tab.active { color: #fff; border-bottom: 2px solid #CE1126; }
+  .app-name { font-size: 22px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* الشريط السفلي */
+  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 18px; background: linear-gradient(0deg, rgba(0,0,0,0.95), transparent); }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #888; font-size: 11px; transition: 0.2s; }
+  .nav-item.active { color: #fff; }
+  .nav-item .nav-icon { font-size: 22px; }
+  .plus-btn { width: 48px; height: 32px; background: linear-gradient(90deg, #CE1126, #fff); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(206,17,38,0.5); }
+
+  /* الكومنتات */
+  .comments-panel { position: fixed; bottom: 0; left: 0; right: 0; height: 60vh; background: #1a1a1a; border-radius: 20px 20px 0 0; z-index: 100; transform: translateY(100%); transition: transform 0.3s; padding: 20px; overflow-y: auto; }
+  .comments-panel.open { transform: translateY(0); }
+  .comments-title { text-align: center; font-weight: bold; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333; }
+  .comment { display: flex; gap: 10px; margin-bottom: 18px; }
+  .comment .avatar { width: 36px; height: 36px; font-size: 14px; }
+  .comment-text .name { font-size: 13px; color: #888; margin-bottom: 3px; }
+  .comment-text .text { font-size: 14px; }
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; display: none; }
+  .overlay.open { display: block; }
+</style>
+</head>
+<body>
+
+<div id="splash">
+  <div class="splash-logo"><h1>عراقچي</h1></div>
+  <div class="splash-tagline">كان... وسيبقى 🇮🇶</div>
+</div>
+
+<div class="top-bar">
+  <div class="app-name">عراقچي</div>
+  <div class="top-tabs">
+    <div class="top-tab active">متابعة</div>
+    <div class="top-tab">لك</div>
+  </div>
+</div>
+
+<div id="feed">
+  <div class="video-card">
+    <div class="video-bg bg1"></div>
+    <div class="video-content"><div class="emoji">🕌</div><div class="text">بغداد يا بغداد</div></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">ع</div>
+        <div class="username">@عراقي_أصيل</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">بغداد 🇮🇶❤️ <span class="hashtag">#العراق</span> <span class="hashtag">#بغداد</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">12K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">340</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">89</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <div class="video-bg bg2"></div>
+    <div class="video-content"><div class="emoji">🌊</div><div class="text">شط العرب</div></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">ب</div>
+        <div class="username">@بصراوي</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">البصرة الفيحاء 🌊 <span class="hashtag">#البصرة</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">8.5K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">210</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">45</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+
+  <div class="video-card">
+    <div class="video-bg bg3"></div>
+    <div class="video-content"><div class="emoji">🏛️</div><div class="text">الموصل تنتعش</div></div>
+    <div class="user-info">
+      <div class="user-row">
+        <div class="avatar">م</div>
+        <div class="username">@موصلي</div>
+        <button class="follow-btn" onclick="toggleFollow(this)">متابعة</button>
+      </div>
+      <div class="caption">الموصل الحبيبة 🏛️ <span class="hashtag">#الموصل</span> <span class="hashtag">#نينوى</span></div>
+    </div>
+    <div class="side-actions">
+      <div class="action" onclick="toggleLike(this)"><div class="action-icon">🤍</div><div class="action-label">15K</div></div>
+      <div class="action" onclick="openComments()"><div class="action-icon">💬</div><div class="action-label">480</div></div>
+      <div class="action"><div class="action-icon">↗️</div><div class="action-label">120</div></div>
+      <div class="action"><div class="action-icon">💿</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav">
+  <div class="nav-item active"><div class="nav-icon">🏠</div><div>الرئيسية</div></div>
+  <div class="nav-item"><div class="nav-icon">🔍</div><div>استكشاف</div></div>
+  <div class="nav-item"><div class="plus-btn">+</div></div>
+  <div class="nav-item"><div class="nav-icon">📥</div><div>الرسائل</div></div>
+  <div class="nav-item"><div class="nav-icon">👤</div><div>حسابي</div></div>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeComments()"></div>
+<div class="comments-panel" id="commentsPanel">
+  <div class="comments-title">التعليقات (3)</div>
+  <div class="comment"><div class="avatar">أ</div><div class="comment-text"><div class="name">@أحمد_البغدادي</div><div class="text">تحيا العراق 🇮🇶🔥</div></div></div>
+  <div class="comment"><div class="avatar">ز</div><div class="comment-text"><div class="name">@زينب</div><div class="text">روعة! ❤️</div></div></div>
+  <div class="comment"><div class="avatar">ح</div><div class="comment-text"><div class="name">@حسين</div><div class="text">بغداد تستاهل كل خير 🥰</div></div></div>
+</div>
+
+<script>
+  setTimeout(() => { document.getElementById('splash').classList.add('hide'); }, 2500);
+  function toggleFollow(btn) { btn.classList.toggle('following'); btn.textContent = btn.classList.contains('following') ? 'متابع' : 'متابعة'; }
+  function toggleLike(el) { const icon = el.querySelector('.action-icon'); if (icon.textContent === '🤍') { icon.textContent = '❤️'; icon.classList.add('liked'); } else { icon.textContent = '🤍'; icon.classList.remove('liked'); } setTimeout(() => icon.classList.remove('liked'), 400); }
+  function openComments() { document.getElementById('commentsPanel').classList.add('open'); document.getElementById('overlay').classList.add('open'); }
+  function closeComments() { document.getElementById('commentsPanel').classList.remove('open'); document.getElementById('overlay').classList.remove('open'); }
+  document.querySelectorAll('.top-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.top-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); }); });
+  document.querySelectorAll('.nav-item').forEach(item => { item.addEventListener('click', () => { document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active')); item.classList.add('active'); }); });
+</script>
+
+</body>
+</html>رقم العائلة : 0205745
+الاسم الاول : حيدر مخيف حسين
+المواليد : 1976
+العمر : 50
+الوظيفة : None
+المحافظة : بابل
+القضاء : None
+المحلة : 624
+الزقاق : 00066
+رقم الدار : 01:q!
+:q
+Save modified buffer?
+n
+
+
+
