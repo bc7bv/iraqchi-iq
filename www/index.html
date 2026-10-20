@@ -7,20 +7,16 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #fff; overflow: hidden; height: 100vh; width: 100vw; }
-
 #splash { position: fixed; inset: 0; background: linear-gradient(180deg, #000 0%, #1a0000 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; transition: opacity 0.8s; }
 #splash.hide { opacity: 0; pointer-events: none; }
 .splash-logo { width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, #CE1126 0%, #000 70%); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 60px rgba(206,17,38,0.6); animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 .splash-logo h1 { font-size: 44px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .splash-tagline { margin-top: 30px; font-size: 16px; color: #888; letter-spacing: 2px; }
-
 #feed { height: 100vh; width: 100vw; overflow-y: scroll; scroll-snap-type: y mandatory; scrollbar-width: none; }
 #feed::-webkit-scrollbar { display: none; }
 .video-card { height: 100vh; width: 100vw; scroll-snap-align: start; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.video-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.6); }
-.video-bg::after { content:''; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 50%, rgba(0,0,0,0.8) 100%); }
-
+.video-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
 .user-info { position: absolute; bottom: 90px; right: 16px; left: 90px; z-index: 10; }
 .user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
 .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #CE1126, #fff); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: #000; border: 2px solid #fff; flex-shrink: 0; }
@@ -29,7 +25,6 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
 .follow-btn.following { background: #CE1126; color: #fff; }
 .caption { font-size: 14px; line-height: 1.5; text-shadow: 0 1px 6px rgba(0,0,0,0.9); }
 .hashtag { color: #CE1126; font-weight: bold; }
-
 .side-actions { position: absolute; left: 10px; bottom: 100px; display: flex; flex-direction: column; gap: 22px; z-index: 10; align-items: center; }
 .action { display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.15s; }
 .action:active { transform: scale(0.85); }
@@ -37,19 +32,16 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
 .action-icon.liked { animation: likePop 0.4s; filter: drop-shadow(0 0 10px #CE1126); }
 @keyframes likePop { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
 .action-label { font-size: 12px; margin-top: 3px; font-weight: bold; text-shadow: 0 1px 3px #000; }
-
 .top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: linear-gradient(180deg, rgba(0,0,0,0.7), transparent); }
 .top-tabs { display: flex; gap: 20px; font-size: 16px; font-weight: bold; }
 .top-tab { color: #888; cursor: pointer; padding-bottom: 4px; transition: 0.2s; }
 .top-tab.active { color: #fff; border-bottom: 2px solid #CE1126; }
 .app-name { font-size: 22px; font-weight: 900; background: linear-gradient(180deg, #fff, #CE1126); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 20; display: flex; justify-content: space-around; align-items: center; padding: 12px 0 18px; background: linear-gradient(0deg, rgba(0,0,0,0.95), transparent); }
 .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #888; font-size: 11px; transition: 0.2s; }
 .nav-item.active { color: #fff; }
 .nav-item .nav-icon { font-size: 22px; }
 .plus-btn { width: 48px; height: 32px; background: linear-gradient(90deg, #CE1126, #fff); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #000; font-weight: bold; box-shadow: 0 0 15px rgba(206,17,38,0.5); }
-
 .comments-panel { position: fixed; bottom: 0; left: 0; right: 0; height: 60vh; background: #1a1a1a; border-radius: 20px 20px 0 0; z-index: 100; transform: translateY(100%); transition: transform 0.3s; padding: 20px; overflow-y: auto; }
 .comments-panel.open { transform: translateY(0); }
 .comments-title { text-align: center; font-weight: bold; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #333; }
@@ -79,7 +71,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
 <div id="feed">
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1589561006913-6b4c1c7e1e40?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/3130284/3130284-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ع</div>
@@ -97,7 +91,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1590168462614-9c42c6b1d84c?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/2098989/2098989-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ب</div>
@@ -115,7 +111,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1580744996142-1b8ad12d8e04?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">م</div>
@@ -133,7 +131,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/3018669/3018669-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">أ</div>
@@ -151,7 +151,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/1409899/1409899-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ن</div>
@@ -169,7 +171,9 @@ body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #000; color: #ff
   </div>
 
   <div class="video-card">
-    <div class="video-bg" style="background-image: url('https://images.unsplash.com/photo-1519066629447-267fffa62d4b?w=800');"></div>
+    <video class="video-bg" autoplay loop muted playsinline>
+      <source src="https://videos.pexels.com/video-files/1494272/1494272-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
     <div class="user-info">
       <div class="user-row">
         <div class="avatar">ب</div>
